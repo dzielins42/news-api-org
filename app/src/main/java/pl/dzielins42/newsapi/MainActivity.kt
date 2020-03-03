@@ -5,12 +5,14 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import eu.davidea.flexibleadapter.FlexibleAdapter
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
     private val flexibleAdapter = FlexibleAdapter<NewsItem>(emptyList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Timber.d("onCreate savedInstanceState=$savedInstanceState")
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

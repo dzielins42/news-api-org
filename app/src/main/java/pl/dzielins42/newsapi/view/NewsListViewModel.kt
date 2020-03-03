@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import pl.dzielins42.newsapi.data.model.News
-import pl.dzielins42.newsapi.bussines.NewsInteractor
+import pl.dzielins42.newsapi.data.NewsRepository
 import timber.log.Timber
 
 class NewsListViewModel(
-    private val newsInteractor: NewsInteractor
+    private val newsRepository: NewsRepository
 ) : ViewModel() {
 
     private val compositeDisposable = CompositeDisposable()
@@ -20,7 +20,12 @@ class NewsListViewModel(
     private val newsListMutableLiveData = MutableLiveData<List<News>>()
 
     fun loadDataPage(page: Int) {
-        compositeDisposable.add(newsInteractor.getData(page)
+        val loadDataPageAction = newsRepository.getData(
+            categories = listOf(NewsRepository.CATEGORY_SPORTS, NewsRepository.CATEGORY_SPORTS),
+            page = page
+        )
+
+        compositeDisposable.add(loadDataPageAction
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 { newData ->
@@ -33,6 +38,7 @@ class NewsListViewModel(
             )
         )
     }
+
 
     override fun onCleared() {
         compositeDisposable.clear()

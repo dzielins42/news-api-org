@@ -18,7 +18,8 @@ interface NewsApiRestService {
     fun getTopHeadlines(
         @Query("country") country: String = "",
         @Query("category") category: String = "",
-        @Query("sources") sources: List<String> = emptyList(),
+        // Due to how Retrofit and NewsAPI.org works, this has to be formatted array
+        @Query("sources") sources: String = "",
         @Query("q") query: String = "",
         @Query("pageSize") pageSize: Int = 20,
         @Query("page") page: Int

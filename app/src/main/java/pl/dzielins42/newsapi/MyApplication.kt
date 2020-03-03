@@ -11,7 +11,6 @@ import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.dsl.module
 import pl.dzielins42.newsapi.data.NewsRepository
-import pl.dzielins42.newsapi.bussines.NewsInteractor
 import pl.dzielins42.newsapi.data.NewsApiRestService
 import pl.dzielins42.newsapi.view.NewsListViewModel
 import retrofit2.Retrofit
@@ -31,8 +30,6 @@ class MyApplication : Application() {
             modules(listOf(
                 // ViewModels
                 module { viewModel { NewsListViewModel(get()) } },
-                // Business logic
-                module { single { NewsInteractor(get()) } },
                 // Data
                 module {
                     fun provideNewsApiRestService(

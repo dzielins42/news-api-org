@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), FlexibleAdapter.EndlessScrollListener 
         viewModel.newsList.observe(this, Observer { news ->
             flexibleAdapter.onLoadMoreComplete(
                 news.subList(lastPosition, news.size)
-                    .map { NewsItem(it.title) }
+                    .map { NewsItem(it) }
             )
         })
     }

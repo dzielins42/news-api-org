@@ -71,5 +71,6 @@ class NewsRepository(
     companion object {
         const val CATEGORY_SPORTS = "sports"
         const val CATEGORY_BUSINESS = "business"
+        const val COUNTRY_US = "us"
     }
 }

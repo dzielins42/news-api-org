@@ -2,6 +2,7 @@ package pl.dzielins42.newsapi.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import eu.davidea.flexibleadapter.FlexibleAdapter
@@ -56,6 +57,18 @@ class MainActivity : AppCompatActivity(), FlexibleAdapter.EndlessScrollListener 
                 news.subList(lastPosition, news.size)
                     .map { NewsItem(it) }
             )
+        })
+
+        viewModel.error.observe(this, Observer { error ->
+            if (error != null) {
+                flexibleAdapter.onLoadMoreComplete(null)
+                Toast.makeText(
+                    this,
+                    error.message,
+                    Toast.LENGTH_LONG
+                ).show()
+                viewModel.dismissError()
+            }
         })
     }
 

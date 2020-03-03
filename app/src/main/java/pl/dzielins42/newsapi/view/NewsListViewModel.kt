@@ -19,6 +19,10 @@ class NewsListViewModel(
         get() = newsListMutableLiveData
     private val newsListMutableLiveData = MutableLiveData<List<News>>()
 
+    val error: LiveData<Throwable>
+        get() = errorMutableLiveData
+    private val errorMutableLiveData = MutableLiveData<Throwable>()
+
     fun loadDataPage(page: Int) {
         val loadDataPageAction = newsRepository.getData(
             country = NewsRepository.COUNTRY_US,
@@ -35,11 +39,15 @@ class NewsListViewModel(
                 },
                 { error ->
                     Timber.e(error)
+                    errorMutableLiveData.value = error
                 }
             )
         )
     }
 
+    fun dismissError() {
+        errorMutableLiveData.value = null
+    }
 
     override fun onCleared() {
         compositeDisposable.clear()

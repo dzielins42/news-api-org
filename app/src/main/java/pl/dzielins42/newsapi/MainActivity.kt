@@ -4,12 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import eu.davidea.flexibleadapter.FlexibleAdapter
+import eu.davidea.flexibleadapter.items.IFlexible
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FlexibleAdapter.EndlessScrollListener {
 
-    private val flexibleAdapter = FlexibleAdapter<NewsItem>(emptyList())
+    private val flexibleAdapter = FlexibleAdapter<IFlexible<*>>(emptyList())
+        .setEndlessScrollListener(this, ProgressItem())
+        // Remove this when list is taken from ViewModel
+        .setLoadingMoreAtStartUp(true)
+        .setEndlessPageSize(PAGE_SIZE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         Timber.d("onCreate savedInstanceState=$savedInstanceState")
@@ -24,15 +29,29 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = flexibleAdapter
         }
-
-        flexibleAdapter.updateDataSet(getMockData(1, 200), true)
     }
 
-    private fun getMockData(from: Int, to: Int): List<NewsItem> {
+    private fun getMockData(startIndex: Int, count: Int): List<NewsItem> {
         return ArrayList<NewsItem>().apply {
-            for (i in from..to) {
-                add(NewsItem("news #$i"))
+            for (i in 0 until count) {
+                add(NewsItem("news #${i + startIndex}"))
             }
         }
+    }
+
+    //region FlexibleAdapter.EndlessScrollListener
+    override fun noMoreLoad(newItemsSize: Int) {
+        Timber.d("noMoreLoad newItemsSize=$newItemsSize")
+    }
+
+    override fun onLoadMore(lastPosition: Int, currentPage: Int) {
+        Timber.d("onLoadMore lastPosition=$lastPosition currentPage=$currentPage")
+        val newData = getMockData(lastPosition, PAGE_SIZE)
+        flexibleAdapter.onLoadMoreComplete(newData)
+    }
+    //endregion
+
+    companion object {
+        private const val PAGE_SIZE = 100
     }
 }

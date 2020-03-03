@@ -38,9 +38,10 @@ class NewsRepository(
             topHeadlinesResponse.articles.map { article ->
                 News(
                     title = article.title,
-                    description = article.description?:"",
-                    urlToImage = article.urlToImage?:"",
-                    publishedAt = article.publishedAt
+                    description = article.description ?: "",
+                    urlToImage = article.urlToImage ?: "",
+                    publishedAt = article.publishedAt,
+                    content = article.content ?: ""
                 )
             }
         }

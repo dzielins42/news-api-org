@@ -7,4 +7,6 @@
     <dimen name="news_item_thumbnail_height">56dp</dimen>
     <dimen name="news_item_thumbnail_width">100dp</dimen>
     <dimen name="news_item_text_thumbnail_space">20dp</dimen>
+
+    <dimen name="news_content_padding">16dp</dimen>
 </resources>

@@ -40,6 +40,14 @@ class MainActivity : AppCompatActivity(), FlexibleAdapter.EndlessScrollListener 
             layoutManager = LinearLayoutManager(this@MainActivity)
             adapter = flexibleAdapter
         }
+
+        flexibleAdapter.addListener(FlexibleAdapter.OnItemClickListener { view, position ->
+            (flexibleAdapter.getItem(position) as? NewsItem)?.let {
+                Timber.d("Item ${it.model} clicked")
+                startActivity(ContentActivity.getIntent(this, it.model))
+            }
+            true
+        })
     }
 
     private fun setupViewModel() {

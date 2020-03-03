@@ -16,6 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "NEWS_API_BASE_URL", '"http://newsapi.org/v2/"')
         buildConfigField("String", "NEWS_API_KEY", secretProperties['NewsAPIKey'])
     }
     buildTypes {
@@ -26,6 +27,10 @@ android {
     }
     androidExtensions {
         experimental = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -56,6 +61,11 @@ dependencies {
     // RxJava2
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.7.2'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.2'
 
     // Android Architecture Components
     def lifecycle_version = "2.2.0"

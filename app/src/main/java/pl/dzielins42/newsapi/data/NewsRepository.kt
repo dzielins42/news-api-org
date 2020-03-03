@@ -35,7 +35,14 @@ class NewsRepository(
                 page = page + 1
             )
         }.map { topHeadlinesResponse ->
-            topHeadlinesResponse.articles.map { News(it.title) }
+            topHeadlinesResponse.articles.map { article ->
+                News(
+                    title = article.title,
+                    description = article.description?:"",
+                    urlToImage = article.urlToImage?:"",
+                    publishedAt = article.publishedAt
+                )
+            }
         }
     }
 
@@ -58,14 +65,6 @@ class NewsRepository(
             sourcesResponse
         }.flatMap { sourcesResponse ->
             sourcesResponse.sources.map { it.id }
-        }
-    }
-
-    private fun getMockData(startIndex: Int, count: Int): List<News> {
-        return ArrayList<News>().apply {
-            for (i in 0 until count) {
-                add(News("news #${i + startIndex}"))
-            }
         }
     }
 

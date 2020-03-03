@@ -21,7 +21,7 @@ class NewsListViewModel(
 
     fun loadDataPage(page: Int) {
         val loadDataPageAction = newsRepository.getData(
-            categories = listOf(NewsRepository.CATEGORY_SPORTS, NewsRepository.CATEGORY_SPORTS),
+            categories = listOf(NewsRepository.CATEGORY_SPORTS, NewsRepository.CATEGORY_BUSINESS),
             page = page
         )
 

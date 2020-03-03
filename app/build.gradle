@@ -4,6 +4,9 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+def secretProperties = new Properties()
+rootProject.file("secret.properties").withInputStream { secretProperties.load(it) }
+
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -13,6 +16,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "NEWS_API_KEY", secretProperties['NewsAPIKey'])
     }
     buildTypes {
         release {

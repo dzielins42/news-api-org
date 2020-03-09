@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">News API</string>
+    <string name="error_no_content">Content empty</string>
 </resources>

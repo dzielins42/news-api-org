@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_content.*
 import pl.dzielins42.newsapi.R
 import pl.dzielins42.newsapi.data.model.News
@@ -15,7 +16,12 @@ class ContentActivity : AppCompatActivity() {
         setContentView(R.layout.activity_content)
 
         val news = intent.getParcelableExtra<News>(EXTRA_NEWS)
-        if (news == null) {
+        if (news?.content.isNullOrBlank()) {
+            Toast.makeText(
+                this,
+                R.string.error_no_content,
+                Toast.LENGTH_LONG
+            ).show()
             finish()
         }
         content.text = news.content

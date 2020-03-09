@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity(), FlexibleAdapter.EndlessScrollListener 
 
     private val flexibleAdapter = FlexibleAdapter<IFlexible<*>>(emptyList())
         .setEndlessScrollListener(this, ProgressItem())
-        // Remove this when list is taken from ViewModel
         .setLoadingMoreAtStartUp(true)
         .setEndlessPageSize(Const.PAGE_SIZE)
 
